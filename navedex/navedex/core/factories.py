@@ -1,6 +1,6 @@
 import factory
 from . import models
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from ..providers.providers import Professions
 
 factory.Faker.add_provider(Professions)
@@ -15,7 +15,7 @@ class UserFactory(DjangoModelFactory):
     email = factory.Faker('email')
 
     class Meta:
-        model = User
+        model = models.User
 
 
 class ProjetoFactory(DjangoModelFactory):
@@ -34,3 +34,11 @@ class NaverFactory(DjangoModelFactory):
 
     class Meta:
         model = models.Naver
+
+
+class NaverProjetoFactory(DjangoModelFactory):
+    projeto = factory.SubFactory(ProjetoFactory)
+    naver = factory.SubFactory(NaverFactory)
+    
+    class Meta:
+        model = models.NaverProjeto

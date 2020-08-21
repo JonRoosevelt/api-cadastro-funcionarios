@@ -3,8 +3,9 @@
 import os
 import sys
 
+from django_lightweight_tests import LightweightTest
 
-def main():
+if __name__ == '__main__':
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'navedex.settings')
     try:
@@ -15,8 +16,7 @@ def main():
             "available on your PYTHONPATH environment variable? Did you "
             "forget to activate a virtual environment?"
         ) from exc
+    is_testing = 'test' in sys.argv
+    if is_testing:
+        LightweightTest()
     execute_from_command_line(sys.argv)
-
-
-if __name__ == '__main__':
-    main()
