@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
 
     # Navedex apps
-    'navedex.core',
+    'core',
 
 ]
 
@@ -65,7 +65,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'navedex.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATES = [
     {
@@ -83,7 +83,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'navedex.wsgi.application'
+WSGI_APPLICATION = 'wsgi.application'
 
 
 # Database
