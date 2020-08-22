@@ -1,7 +1,7 @@
 import factory
 from . import models
 # from django.contrib.auth.models import User
-from ..providers.providers import Professions
+from providers.providers import Professions
 
 factory.Faker.add_provider(Professions)
 

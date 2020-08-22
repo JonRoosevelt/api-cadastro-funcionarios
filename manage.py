@@ -7,7 +7,7 @@ from django_lightweight_tests import LightweightTest
 
 if __name__ == '__main__':
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'navedex.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
