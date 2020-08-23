@@ -7,7 +7,7 @@ from rest_framework.test import APIClient
 import json
 
 
-class NaversViewsTestCase(TestCase):
+class NaversIndexViewTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.navers_dict = dict(
