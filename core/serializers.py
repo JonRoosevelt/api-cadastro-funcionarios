@@ -41,3 +41,18 @@ class NaverProjetoSerializer(serializers.ModelSerializer):
             'projeto',
             'naver',
         ]
+
+
+class NaverDetailsSerializer(serializers.ModelSerializer):
+    projects = ProjetoSerializer(many=True)
+    
+    class Meta:
+        model = models.Naver
+        fields = [
+            'id',
+            'name',
+            'birthdate',
+            'admission_date',
+            'job_role',
+            'projects',
+        ]
