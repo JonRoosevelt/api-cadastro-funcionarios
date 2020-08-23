@@ -9,6 +9,7 @@ router.register('projetos', views.ProjetosView, basename='projetos')
 
 urlpatterns = [
     path('api/', include(router.urls)),
+    path('users/register', views.UserCreate.as_view())
     # path('projetos/', views.ProjetosView.as_view(), name='projetos'),
     # path('api-token-auth/', obtain_auth_token, name='api_token_auth')
 ]

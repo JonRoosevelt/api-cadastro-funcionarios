@@ -9,17 +9,14 @@ class SerializersTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.user = UserFactory(
-            username='johndoe',
-            first_name='John',
-            last_name='Doe',
             email='johndoe@doe.com'
         )
         cls.naver = NaverFactory(
-            user=cls.user,
             name='John Doe',
             birthdate=parse_date('1990-10-12'),
             admission_date=parse_date('2011-08-01'),
-            job_role='Desenvolvedor'
+            job_role='Desenvolvedor',
+            created_by=cls.user,
         )
         cls.projeto = ProjetoFactory(
             name='Any project'
@@ -32,10 +29,6 @@ class SerializersTestCase(TestCase):
     def test_if_user_serializers_returns_as_expected(self):
         user = User.objects.first()
         serializer = UserSerializer(user)
-        self.assertEqual(serializer.data['id'], 1)
-        self.assertEqual(serializer.data['username'], 'johndoe')
-        self.assertEqual(serializer.data['first_name'], 'John')
-        self.assertEqual(serializer.data['last_name'], 'Doe')
         self.assertEqual(serializer.data['email'], 'johndoe@doe.com')
 
     def test_if_naver_serializer_returns_as_expected(self):

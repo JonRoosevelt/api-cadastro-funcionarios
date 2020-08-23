@@ -87,6 +87,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'wsgi.application'
 
 
+AUTH_USER_MODEL = 'core.User'
+
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
@@ -94,7 +96,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'navedex',
-        'USER': 'sa',
+        'USER': 'postgres',
         'PASSWORD': '123456',
         'HOST': 'localhost',
         'PORT': '',
