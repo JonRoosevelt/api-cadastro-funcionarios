@@ -1,7 +1,7 @@
 from rest_framework import views, viewsets
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from . import models, serializers
+from . import models, serializers, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter
 
@@ -17,8 +17,7 @@ class HelloView(views.APIView):
 class NaversView(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.NaverSerializer
     queryset = models.Naver.objects.all()
-    filter_backends = [SearchFilter, DjangoFilterBackend]
-    search_fields = ['name']
+    filterset_class = filters.NaversIndexFilter
 
 
 class ProjetosView(viewsets.ReadOnlyModelViewSet):
