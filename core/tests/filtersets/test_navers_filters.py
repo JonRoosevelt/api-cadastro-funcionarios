@@ -39,22 +39,21 @@ class FilterNaverByYearTestCase(TestCase):
         cls.filterset = NaversIndexFilter
 
     def test_filter_navers_by_company_time_last_two_years(self):
-        filtered_queryset = self.filterset(
-            self.queryset, 'years', 0, 2).filter_company_time()
+        filtered_queryset = self.filterset().filter_company_time(
+            self.queryset, 'years', '0,2')
         self.assertEqual(len(filtered_queryset), 3)
         self.assertEqual(filtered_queryset[0].id, 1)
         self.assertEqual(filtered_queryset[1].id, 2)
         self.assertEqual(filtered_queryset[2].id, 3)
 
     def test_filters_navers_by_company_times_greater_than_three_years(self):
-        filtered_queryset = self.filterset(
-            self.queryset, 'years', 3, 10).filter_company_time()
+        filtered_queryset = self.filterset().filter_company_time(
+            self.queryset, 'years', '3,10')
         self.assertEqual(len(filtered_queryset), 1)
         self.assertEqual(filtered_queryset[0].id, 4)
 
     def test_filters_navers_by_company_times_for_the_last_1_year(self):
-        filtered_queryset = self.filterset(
-            self.queryset, 'years', 0).filter_company_time()
+        filtered_queryset = self.filterset().filter_company_time(self.queryset, 'years', '0')
         self.assertEqual(len(filtered_queryset), 1)
 
 
@@ -92,7 +91,8 @@ class FilterNaverByMonthTestCase(TestCase):
         cls.filterset = NaversIndexFilter
 
     def test_filter_navers_by_company_time_last_two_months(self):
-        filtered_queryset = self.filterset().filter_company_time(self.queryset, 'months', '2')
+        filtered_queryset = self.filterset().filter_company_time(
+            self.queryset, 'months', '2')
         self.assertEqual(len(filtered_queryset), 0)
 
     def test_filter_navers_by_company_time_last_ten_months(self):
@@ -112,7 +112,8 @@ class FilterNaverByMonthTestCase(TestCase):
         self.assertEqual(filtered_queryset[0].id, 2)
 
     def test_filters_navers_by_company_times_for_the_last_eight_month(self):
-        filtered_queryset = self.filterset().filter_company_time(self.queryset, 'months', '8')
+        filtered_queryset = self.filterset().filter_company_time(
+            self.queryset, 'months', '8')
         self.assertEqual(len(filtered_queryset), 1)
 
 
@@ -150,7 +151,8 @@ class FilterNaverByDaysTestCase(TestCase):
         cls.filterset = NaversIndexFilter
 
     def test_filter_navers_by_company_time_last_500_days(self):
-        filtered_queryset = self.filterset().filter_company_time(self.queryset, 'days', '500')
+        filtered_queryset = self.filterset().filter_company_time(
+            self.queryset, 'days', '500')
         self.assertEqual(len(filtered_queryset), 2)
 
     def test_filter_navers_by_company_time_last_300_days(self):

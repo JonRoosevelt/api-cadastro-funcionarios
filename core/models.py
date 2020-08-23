@@ -1,6 +1,25 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
+
 from .helpers import NaverBaseModel
+from .managers import CustomUserManager
+
+
+class User(AbstractUser):
+    username = None
+    email = models.EmailField(_('email address'), unique=True)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+    objects = CustomUserManager()
+
+    def __str__(self):
+        return self.email
 
 
 class Projeto(models.Model):
@@ -11,8 +30,6 @@ class Projeto(models.Model):
 
 
 class Naver(NaverBaseModel):
-    user = models.OneToOneField(
-        User, related_name='naver', on_delete=models.PROTECT)
     name = models.CharField(max_length=200, db_index=True)
     birthdate = models.DateField(
         db_column='data_nascimento',
@@ -30,6 +47,11 @@ class Naver(NaverBaseModel):
         through='NaverProjeto',
         related_name='navers',
         blank=True,
+    )
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='naver',
+        on_delete=models.PROTECT
     )
 
     class Meta:

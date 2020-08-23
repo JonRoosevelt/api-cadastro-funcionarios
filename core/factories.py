@@ -9,9 +9,6 @@ DjangoModelFactory = factory.django.DjangoModelFactory
 
 
 class UserFactory(DjangoModelFactory):
-    username = factory.Faker('user_name')
-    first_name = factory.Faker('name')
-    last_name = factory.Faker('name')
     email = factory.Faker('email')
 
     class Meta:
@@ -26,11 +23,11 @@ class ProjetoFactory(DjangoModelFactory):
 
 
 class NaverFactory(DjangoModelFactory):
-    user = factory.SubFactory(UserFactory)
     name = factory.LazyAttribute(lambda o: o.user.last_name)
     birthdate = factory.Faker('date_of_birth')
     admission_date = factory.Faker('date')
     job_role = factory.Faker('role')
+    created_by = factory.SubFactory(UserFactory)
 
     class Meta:
         model = models.Naver
