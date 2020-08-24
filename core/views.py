@@ -14,6 +14,7 @@ from rest_framework import permissions
 from django.views.decorators.csrf import csrf_exempt
 from django.db import transaction
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 
 class HelloView(views.APIView):
@@ -31,6 +32,7 @@ class UserCreate(generics.CreateAPIView):
 
 
 class NaversView(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
     serializer_class = serializers.NaverSerializer
     queryset = models.Naver.objects.all()
     filterset_class = filters.NaversIndexFilter
@@ -121,6 +123,7 @@ class NaversView(viewsets.ModelViewSet):
 
 
 class ProjetosView(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [IsAuthenticated]
     serializer_class = serializers.ProjetoSerializer
     queryset = models.Projeto.objects.all()
     filter_backends = [SearchFilter, DjangoFilterBackend]
