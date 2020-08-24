@@ -1,20 +1,12 @@
-from rest_framework import views, viewsets, generics
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-from . import models, serializers, filters
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.filters import SearchFilter
-from django.db.models import Prefetch
-from rest_framework.decorators import action
-from rest_framework import status
-from rest_framework.decorators import api_view
-from rest_framework.generics import CreateAPIView
-from django.conf import settings
-from rest_framework import permissions
-from django.views.decorators.csrf import csrf_exempt
 from django.db import transaction
-from rest_framework.response import Response
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import generics, permissions, views, viewsets
+from rest_framework.decorators import action
+from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+
+from . import filters, models, serializers
 
 
 class HelloView(views.APIView):
@@ -36,10 +28,6 @@ class NaversView(viewsets.ModelViewSet):
     serializer_class = serializers.NaverSerializer
     queryset = models.Naver.objects.all()
     filterset_class = filters.NaversIndexFilter
-
-    # def form_valid(self, form):
-    #     form.instance.user = models.Naver.objects.get(user=self.request.user)
-    #     return super(NaversView, self).form_valid(form)
 
     def get_serializer_class(self):
         if self.action == 'retrieve':

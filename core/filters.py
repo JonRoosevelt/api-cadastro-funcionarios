@@ -1,9 +1,8 @@
-from django_filters import rest_framework as filters
-from .models import Naver
-from dateutil.relativedelta import relativedelta
 import datetime
-from itertools import groupby
-from operator import itemgetter
+
+from django_filters import rest_framework as filters
+
+from .models import Naver
 
 
 class NaversIndexFilter(filters.FilterSet):

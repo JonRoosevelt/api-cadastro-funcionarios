@@ -1,8 +1,9 @@
 from django.test import TestCase
+from django.utils.dateparse import parse_date
+
 from core.factories import NaverFactory
 from core.filters import NaversIndexFilter
 from core.models import Naver
-from django.utils.dateparse import parse_date
 
 
 class FilterNaverByYearTestCase(TestCase):

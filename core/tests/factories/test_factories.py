@@ -1,7 +1,9 @@
 from django.test.testcases import TestCase
-from core.factories import UserFactory, NaverFactory, ProjetoFactory, NaverProjetoFactory
-from core.models import User, Naver, Projeto, NaverProjeto
 from django.utils.dateparse import parse_date
+
+from core.factories import (NaverFactory, NaverProjetoFactory, ProjetoFactory,
+                            UserFactory)
+from core.models import Naver, NaverProjeto, Projeto, User
 
 
 class FactoriesTestCase(TestCase):
