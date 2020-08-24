@@ -101,21 +101,22 @@ class NaversView(viewsets.ModelViewSet):
                     return Response(data=validated_data, status=201)
         return Response(serialized_data.errors)
 
+    # @action(methods=['delete'], detail=True)
+    def destroy(self, *args, **kwargs):
+        if self.request.method != 'DELETE':
+            return
+        naver = models.Naver.objects.filter(id=self.kwargs['pk'])
+        if naver:
+            if naver.filter(created_by=self.request.user.id):
+                with transaction.atomic():
+                    naver.delete()
+                return Response(status=204)
+            return Response(status=403)
+        return Response(status=404)
+
 
 class ProjetosView(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.ProjetoSerializer
     queryset = models.Projeto.objects.all()
     filter_backends = [SearchFilter, DjangoFilterBackend]
     search_fields = ['name']
-
-# @api_view(['POST'])
-# def create_auth(request):
-#     serialized = serializers.UserSerializer(data=request.DATA)
-#     if serialized.is_valid():
-#         models.User.objects.create_user(
-#             serialized.init_data['email'],
-#             serialized.init_data['password']
-#         )
-#         return Response(serialized.data, status=status.HTTP_201_CREATED)
-#     else:
-#         return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)
