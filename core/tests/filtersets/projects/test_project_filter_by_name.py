@@ -16,7 +16,7 @@ class ProjectFilterByNameTestCase(TestCase):
             name='projeto 2',
             created_by=cls.user
         )
-    
+
     def setUp(self):
         self.client = APIClient()
         self.client.force_authenticate(self.user)

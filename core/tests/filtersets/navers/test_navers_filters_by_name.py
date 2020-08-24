@@ -1,6 +1,7 @@
 from django.test import TestCase
-from core.factories import NaverFactory, UserFactory
 from rest_framework.test import APIClient
+
+from core.factories import NaverFactory, UserFactory
 
 
 class NaverFilterByNameTestCase(TestCase):
@@ -26,7 +27,7 @@ class NaverFilterByNameTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]['name'], 'Rodrigo')
-    
+
     def test_project_filters_by_name_marcela(self):
         response = self.client.get(self.url, {'name': 'Marcela'})
         self.assertEqual(response.status_code, 200)
