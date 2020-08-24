@@ -116,3 +116,40 @@ class ProjetosView(viewsets.ReadOnlyModelViewSet):
     queryset = models.Projeto.objects.all()
     filter_backends = [SearchFilter, DjangoFilterBackend]
     search_fields = ['name']
+
+    def get_serializer_class(self):
+        if self.action == 'retrieve':
+            return serializers.ProjetoSerializer
+        return serializers.ProjetoSerializer
+
+    def get_queryset(self):
+        if self.action == 'retrieve':
+            return (models.Projeto.objects
+                    .prefetch_related(
+                        'navers'
+                    ).all())
+
+    def get_serialized_data(self):
+        project = dict(
+            name=self.request.data['name'],
+        )
+        serializer = self.get_serializer_class()
+        return serializer(data=project)
+    
+    def create(self, *args, **kwargs):
+        if self.request.method != 'POST':
+            return
+        serialized_data = self.get_serialized_data()
+        if serialized_data.is_valid():
+            with transaction.atomic():
+                user = self.request.user
+                validated_data = serialized_data.data
+                validated_data['created_by'] = user
+                instance = models.Projeto.objects.create(
+                    **validated_data
+                )
+                instance.save()
+                serialized_instance = self.get_serializer_class()(
+                    instance).data
+                return Response(data=serialized_instance, status=201)
+        return Response(serialized_data.errors)

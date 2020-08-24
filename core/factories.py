@@ -19,6 +19,7 @@ class UserFactory(DjangoModelFactory):
 
 class ProjetoFactory(DjangoModelFactory):
     name = factory.Faker('company')
+    created_by = factory.SubFactory(UserFactory)
 
     class Meta:
         model = models.Projeto

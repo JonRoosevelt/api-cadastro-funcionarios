@@ -22,6 +22,11 @@ class User(AbstractUser):
 
 class Projeto(models.Model):
     name = models.CharField(max_length=100, db_index=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='projeto',
+        on_delete=models.PROTECT
+    )
 
     class Meta:
         db_table = 'projeto'
