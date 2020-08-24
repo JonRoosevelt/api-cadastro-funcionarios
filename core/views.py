@@ -55,31 +55,51 @@ class NaversView(viewsets.ModelViewSet):
     def details(self, request, pk):
         return super().retrieve(request, pk)
 
+    def get_serialized_data(self):
+        naver = dict(
+            name=self.request.data['name'],
+            birthdate=self.request.data['birthdate'],
+            admission_date=self.request.data['admission_date'],
+            job_role=self.request.data['job_role'],
+        )
+        serializer = self.get_serializer_class()
+        return serializer(data=naver)
+
     def create(self, *args, **kwargs):
-        if self.request.method == 'POST':
-            naver = dict(
-                name=self.request.data['name'],
-                birthdate=self.request.data['birthdate'],
-                admission_date=self.request.data['admission_date'],
-                job_role=self.request.data['job_role'],
-                created_by=self.request.data['created_by']
-            )
-            serializer = self.get_serializer_class()
-            serializer = serializer(data=naver)
-            if serializer.is_valid():
-                with transaction.atomic():
-                    user = models.User.objects.get(
-                        id=naver['created_by'])
-                    validated_data = serializer.data
-                    validated_data['created_by'] = user
-                    instance = models.Naver.objects.create(
-                        **validated_data
-                    )
-                    instance.save()
-                    serialized_instance = self.get_serializer_class()(
-                        instance).data
-                    return Response(data=serialized_instance, status=201)
-            return Response(serializer.errors)
+        if self.request.method != 'POST':
+            return
+        serialized_data = self.get_serialized_data()
+        if serialized_data.is_valid():
+            with transaction.atomic():
+                user = self.request.user
+                validated_data = serialized_data.data
+                validated_data['created_by'] = user
+                instance = models.Naver.objects.create(
+                    **validated_data
+                )
+                instance.save()
+                serialized_instance = self.get_serializer_class()(
+                    instance).data
+                return Response(data=serialized_instance, status=201)
+        return Response(serialized_data.errors)
+
+    def update(self, *args, **kwargs):
+        if self.request.method != 'PUT':
+            return
+        serialized_data = self.get_serialized_data()
+        if serialized_data.is_valid():
+            with transaction.atomic():
+                user = self.request.user
+                validated_data = serialized_data.data
+                validated_data['created_by'] = user
+                instance = models.Naver.objects.update(
+                    **validated_data
+                )
+                if bool(instance):
+                    validated_data['id'] = int(self.kwargs['pk'])
+                    validated_data['created_by'] = self.request.user.id
+                    return Response(data=validated_data, status=201)
+        return Response(serialized_data.errors)
 
 
 class ProjetosView(viewsets.ReadOnlyModelViewSet):
