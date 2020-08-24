@@ -86,20 +86,25 @@ class NaversView(viewsets.ModelViewSet):
     def update(self, *args, **kwargs):
         if self.request.method != 'PUT':
             return
-        serialized_data = self.get_serialized_data()
-        if serialized_data.is_valid():
-            with transaction.atomic():
-                user = self.request.user
-                validated_data = serialized_data.data
-                validated_data['created_by'] = user
-                instance = models.Naver.objects.update(
-                    **validated_data
-                )
-                if bool(instance):
-                    validated_data['id'] = int(self.kwargs['pk'])
-                    validated_data['created_by'] = self.request.user.id
-                    return Response(data=validated_data, status=201)
-        return Response(serialized_data.errors)
+        naver = models.Naver.objects.filter(id=self.kwargs['pk']).first()
+        if naver:
+            if naver.created_by.id == self.request.user.id:
+                serialized_data = self.get_serialized_data()
+                if serialized_data.is_valid():
+                    with transaction.atomic():
+                        user = self.request.user
+                        validated_data = serialized_data.data
+                        validated_data['created_by'] = user
+                        instance = models.Naver.objects.update(
+                            **validated_data
+                        )
+                        if bool(instance):
+                            validated_data['id'] = int(self.kwargs['pk'])
+                            validated_data['created_by'] = self.request.user.id
+                            return Response(data=validated_data, status=201)
+                return Response(serialized_data.errors)
+            return Response(status=403)
+        return Response(status=404)
 
     # @action(methods=['delete'], detail=True)
     def destroy(self, *args, **kwargs):
