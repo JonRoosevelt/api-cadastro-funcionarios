@@ -1,10 +1,7 @@
-import json
-
 from django.test import TestCase
 from rest_framework.test import APIClient
 
-from core.models import Naver
-from core.factories import UserFactory, NaverProjetoFactory, NaverFactory
+from core.factories import UserFactory, NaverFactory
 
 
 class NaversUpdateViewTestCase(TestCase):

@@ -23,7 +23,7 @@ class ProjetoFactory(DjangoModelFactory):
 
 
 class NaverFactory(DjangoModelFactory):
-    name = factory.LazyAttribute(lambda o: o.user.last_name)
+    name = factory.Faker('name')
     birthdate = factory.Faker('date_of_birth')
     admission_date = factory.Faker('date')
     job_role = factory.Faker('role')
