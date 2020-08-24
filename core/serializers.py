@@ -1,6 +1,6 @@
-from . import models
 from rest_framework import serializers
-from django.conf import settings
+
+from . import models
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -54,7 +54,7 @@ class NaverProjetoSerializer(serializers.ModelSerializer):
 
 class NaverDetailsSerializer(serializers.ModelSerializer):
     projects = ProjetoSerializer(many=True)
-    
+
     class Meta:
         model = models.Naver
         fields = [

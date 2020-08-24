@@ -1,10 +1,10 @@
+import json
+
 from django.test import TestCase
-from core.factories import NaverFactory, UserFactory
-from core.models import Naver
-from core.serializers import NaverSerializer
 from django.utils.dateparse import parse_date
 from rest_framework.test import APIClient
-import json
+
+from core.factories import NaverFactory, UserFactory
 
 
 class NaversIndexViewTestCase(TestCase):

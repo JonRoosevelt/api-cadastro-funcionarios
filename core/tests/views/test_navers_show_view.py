@@ -1,7 +1,9 @@
-from django.test import TestCase
-from core.factories import NaverProjetoFactory, UserFactory, NaverFactory
-from rest_framework.test import APIClient
 import json
+
+from django.test import TestCase
+from rest_framework.test import APIClient
+
+from core.factories import NaverFactory, NaverProjetoFactory, UserFactory
 
 
 class NaversShowViewTestCase(TestCase):
@@ -56,7 +58,7 @@ class NaversShowViewTestCase(TestCase):
                     id=4,
                     name='Projeto 4'
                 ),
-            ]    
+            ]
         )
 
     def setUp(self):

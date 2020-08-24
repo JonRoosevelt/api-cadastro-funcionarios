@@ -1,7 +1,9 @@
 import factory
-from . import models
+
 # from django.contrib.auth.models import User
 from providers.providers import Professions
+
+from . import models
 
 factory.Faker.add_provider(Professions)
 
@@ -36,6 +38,6 @@ class NaverFactory(DjangoModelFactory):
 class NaverProjetoFactory(DjangoModelFactory):
     projeto = factory.SubFactory(ProjetoFactory)
     naver = factory.SubFactory(NaverFactory)
-    
+
     class Meta:
         model = models.NaverProjeto

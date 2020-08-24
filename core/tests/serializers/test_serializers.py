@@ -1,8 +1,11 @@
 from django.test.testcases import TestCase
-from core.factories import UserFactory, NaverFactory, ProjetoFactory, NaverProjetoFactory
-from core.models import User, Naver, Projeto, NaverProjeto
-from core.serializers import UserSerializer, NaverSerializer, ProjetoSerializer, NaverProjetoSerializer
 from django.utils.dateparse import parse_date
+
+from core.factories import (NaverFactory, NaverProjetoFactory, ProjetoFactory,
+                            UserFactory)
+from core.models import Naver, NaverProjeto, Projeto, User
+from core.serializers import (NaverProjetoSerializer, NaverSerializer,
+                              ProjetoSerializer, UserSerializer)
 
 
 class SerializersTestCase(TestCase):

@@ -1,7 +1,7 @@
 from django.test import TestCase
 from rest_framework.test import APIClient
 
-from core.factories import UserFactory, NaverFactory
+from core.factories import NaverFactory, UserFactory
 
 
 class NaversDeleteViewTestCase(TestCase):
