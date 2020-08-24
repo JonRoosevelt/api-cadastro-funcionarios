@@ -65,3 +65,15 @@ class NaverDetailsSerializer(serializers.ModelSerializer):
             'job_role',
             'projects',
         ]
+
+
+class ProjetoDetailsSerializer(serializers.ModelSerializer):
+    navers = NaverSerializer(many=True)
+
+    class Meta:
+        model = models.Projeto
+        fields = [
+            'id',
+            'name',
+            'navers'
+        ]
