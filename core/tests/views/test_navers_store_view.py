@@ -1,7 +1,6 @@
 import json
 
 from django.test import TestCase
-from django.utils.dateparse import parse_date
 from rest_framework.test import APIClient
 
 from core.models import Naver
