@@ -111,10 +111,11 @@ class NaversView(viewsets.ModelViewSet):
 
 
 class ProjetosView(viewsets.ReadOnlyModelViewSet):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     serializer_class = serializers.ProjetoSerializer
     queryset = models.Projeto.objects.all()
     filter_backends = [SearchFilter, DjangoFilterBackend]
+    filterset_fields = ['name']
     search_fields = ['name']
 
     def get_serializer_class(self):
@@ -128,6 +129,7 @@ class ProjetosView(viewsets.ReadOnlyModelViewSet):
                     .prefetch_related(
                         'navers'
                     ).all())
+        return models.Projeto.objects.all()
 
     def get_serialized_data(self):
         project = dict(
