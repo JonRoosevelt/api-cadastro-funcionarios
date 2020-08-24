@@ -7,6 +7,7 @@ from core.factories import NaverFactory, NaverProjetoFactory, UserFactory
 
 
 class NaversShowViewTestCase(TestCase):
+    maxDiff = None
 
     @classmethod
     def setUpTestData(cls):

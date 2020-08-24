@@ -20,7 +20,8 @@ class FactoriesTestCase(TestCase):
             created_by=cls.user
         )
         cls.projeto = ProjetoFactory(
-            name='Any project'
+            name='Any project',
+            created_by=cls.user
         )
         cls.naver_projeto = NaverProjetoFactory(
             projeto=cls.projeto,
