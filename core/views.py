@@ -120,7 +120,7 @@ class ProjetosView(viewsets.ReadOnlyModelViewSet):
 
     def get_serializer_class(self):
         if self.action == 'retrieve':
-            return serializers.ProjetoSerializer
+            return serializers.ProjetoDetailsSerializer
         return serializers.ProjetoSerializer
 
     def get_queryset(self):
