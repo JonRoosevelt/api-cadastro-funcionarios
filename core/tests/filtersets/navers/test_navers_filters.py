@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.utils.dateparse import parse_date
 
+from freezegun import freeze_time
 from core.factories import NaverFactory
 from core.filters import NaversIndexFilter
 from core.models import Naver
@@ -38,7 +39,8 @@ class FilterNaverByYearTestCase(TestCase):
 
         cls.queryset = Naver.objects.all()
         cls.filterset = NaversIndexFilter
-
+    
+    @freeze_time('2020-08-24 22:55')
     def test_filter_navers_by_company_time_last_two_years(self):
         filtered_queryset = self.filterset().filter_company_time(
             self.queryset, 'years', '0,2')
@@ -46,13 +48,15 @@ class FilterNaverByYearTestCase(TestCase):
         self.assertEqual(filtered_queryset[0].id, 1)
         self.assertEqual(filtered_queryset[1].id, 2)
         self.assertEqual(filtered_queryset[2].id, 3)
-
+    
+    @freeze_time('2020-08-24 22:55')
     def test_filters_navers_by_company_times_greater_than_three_years(self):
         filtered_queryset = self.filterset().filter_company_time(
             self.queryset, 'years', '3,10')
         self.assertEqual(len(filtered_queryset), 1)
         self.assertEqual(filtered_queryset[0].id, 4)
-
+    
+    @freeze_time('2020-08-24 22:55')
     def test_filters_navers_by_company_times_for_the_last_1_year(self):
         filtered_queryset = self.filterset().filter_company_time(self.queryset, 'years', '0')
         self.assertEqual(len(filtered_queryset), 1)
@@ -90,28 +94,33 @@ class FilterNaverByMonthTestCase(TestCase):
 
         cls.queryset = Naver.objects.all()
         cls.filterset = NaversIndexFilter
-
+    
+    @freeze_time('2020-08-24 22:55')
     def test_filter_navers_by_company_time_last_two_months(self):
         filtered_queryset = self.filterset().filter_company_time(
             self.queryset, 'months', '2')
         self.assertEqual(len(filtered_queryset), 0)
-
+    
+    @freeze_time('2020-08-24 22:55')
     def test_filter_navers_by_company_time_last_ten_months(self):
         filtered_queryset = self.filterset().filter_company_time(
             self.queryset, 'months', '0,10')
         self.assertEqual(len(filtered_queryset), 1)
-
+    
+    @freeze_time('2020-08-24 22:55')
     def test_filter_navers_by_company_time_last_sixteen_months(self):
         filtered_queryset = self.filterset().filter_company_time(
             self.queryset, 'months', '0,16')
         self.assertEqual(len(filtered_queryset), 2)
-
+    
+    @freeze_time('2020-08-24 22:55')
     def test_filters_navers_by_company_times_between_eight_months_and_sixteen_months(self):
         filtered_queryset = self.filterset().filter_company_time(
             self.queryset, 'months', '8,16')
         self.assertEqual(len(filtered_queryset), 1)
         self.assertEqual(filtered_queryset[0].id, 2)
-
+    
+    @freeze_time('2020-08-24 22:55')
     def test_filters_navers_by_company_times_for_the_last_eight_month(self):
         filtered_queryset = self.filterset().filter_company_time(
             self.queryset, 'months', '8')

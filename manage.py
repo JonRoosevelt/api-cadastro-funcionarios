@@ -3,7 +3,6 @@
 import os
 import sys
 
-from django_lightweight_tests import LightweightTest
 
 if __name__ == '__main__':
     """Run administrative tasks."""
@@ -17,6 +16,4 @@ if __name__ == '__main__':
             "forget to activate a virtual environment?"
         ) from exc
     is_testing = 'test' in sys.argv
-    if is_testing:
-        LightweightTest()
     execute_from_command_line(sys.argv)
