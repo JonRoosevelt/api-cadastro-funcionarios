@@ -3,6 +3,7 @@ import json
 from django.test import TestCase
 from django.utils.dateparse import parse_date
 from rest_framework.test import APIClient
+from freezegun import freeze_time
 
 from core.factories import NaverFactory, UserFactory
 
@@ -107,40 +108,47 @@ class NaversIndexViewTestCase(TestCase):
         self.assertEqual(
             json.dumps(naver_4.data[0]),
             json.dumps(self.expected_navers_list[3]))
-
+    
+    @freeze_time('2020-08-24 22:55')
     def test_index_view_filter_by_company_time_in_years(self):
         response = self.client.get(self.url, {'company_time_in_years': '2'})
         self.assertEqual(len(response.data), 3)
         self.assertEqual(response.data[0]['id'], 1)
         self.assertEqual(response.data[1]['id'], 2)
         self.assertEqual(response.data[2]['id'], 3)
-
+    
+    @freeze_time('2020-08-24 22:55')
     def test_index_view_filter_by_company_time_in_months(self):
         response = self.client.get(self.url, {'company_time_in_months': '8'})
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]['id'], 3)
-
+    
+    @freeze_time('2020-08-24 22:55')
     def test_index_view_filter_by_company_time_in_months_with_2_digits(self):
         response = self.client.get(self.url, {'company_time_in_months': '8,16'})
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]['id'], 2)
-
+    
+    @freeze_time('2020-08-24 22:55')
     def test_index_view_filter_by_company_time_in_days(self):
         response = self.client.get(self.url, {'company_time_in_days': '500'})
         self.assertEqual(len(response.data), 2)
         self.assertEqual(response.data[0]['id'], 2)
         self.assertEqual(response.data[1]['id'], 3)
-
+    
+    @freeze_time('2020-08-24 22:55')
     def test_index_view_filter_by_company_time_in_days_with_2_digits(self):
         response = self.client.get(self.url, {'company_time_in_days': '0,300'})
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]['id'], 3)
-
+    
+    @freeze_time('2020-08-24 22:55')
     def test_index_view_filter_by_job_role_desenvoledor_react(self):
         response = self.client.get(self.url, {'job_role': 'Desenvolvedor React'})
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]['id'], 1)
-
+    
+    @freeze_time('2020-08-24 22:55')
     def test_index_view_filter_by_job_role_desenvoledora_backend(self):
         response = self.client.get(self.url, {'job_role': 'Desenvolvedora Backend'})
         self.assertEqual(len(response.data), 1)
