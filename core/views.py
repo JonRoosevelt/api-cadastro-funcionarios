@@ -5,6 +5,7 @@ from rest_framework.decorators import action
 from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from . import filters, models, serializers
 
@@ -24,6 +25,7 @@ class UserCreate(generics.CreateAPIView):
 
 
 class NaversView(viewsets.ModelViewSet):
+    authentication_classes = [JSONWebTokenAuthentication]
     permission_classes = [IsAuthenticated]
     serializer_class = serializers.NaverSerializer
     queryset = models.Naver.objects.all()
@@ -110,7 +112,8 @@ class NaversView(viewsets.ModelViewSet):
 
 
 class ProjetosView(viewsets.ReadOnlyModelViewSet):
-    # permission_classes = [IsAuthenticated]
+    authentication_classes = [JSONWebTokenAuthentication]
+    permission_classes = [IsAuthenticated]
     serializer_class = serializers.ProjetoSerializer
     queryset = models.Projeto.objects.all()
     filter_backends = [SearchFilter, DjangoFilterBackend]
