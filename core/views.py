@@ -96,7 +96,6 @@ class NaversView(viewsets.ModelViewSet):
             return Response(status=403)
         return Response(status=404)
 
-    # @action(methods=['delete'], detail=True)
     def destroy(self, *args, **kwargs):
         if self.request.method != 'DELETE':
             return
@@ -176,5 +175,17 @@ class ProjetosView(viewsets.ReadOnlyModelViewSet):
                             validated_data['created_by'] = self.request.user.id
                             return Response(data=validated_data, status=201)
                 return Response(serializer_data.errors)
+            return Response(status=403)
+        return Response(status=404)
+
+    def destroy(self, *args, **kwargs):
+        if self.request.method != 'DELETE':
+            return
+        projeto = models.Projeto.objects.filter(id=self.kwargs['pk'])
+        if projeto:
+            if projeto.filter(created_by=self.request.user.id):
+                with transaction.atomic():
+                    projeto.delete()
+                return Response(status=204)
             return Response(status=403)
         return Response(status=404)
