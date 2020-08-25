@@ -10,30 +10,35 @@ from core.factories import NaverFactory, UserFactory
 class NaversIndexViewTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
+        cls.user = UserFactory()
         cls.navers_dict = dict(
             naver_1=NaverFactory(
                 name="Joao Augusto",
                 birthdate=parse_date('1990-10-12'),
                 admission_date=parse_date('2018-01-02'),
                 job_role='Desenvolvedor React',
+                created_by=cls.user
             ),
             naver_2=NaverFactory(
                 name='Fernanda Oliveira',
                 birthdate=parse_date('1995-08-06'),
                 admission_date=parse_date('2019-05-03'),
                 job_role='Desenvolvedora Backend',
+                created_by=cls.user
             ),
             naver_3=NaverFactory(
                 name='Deivison Pereira',
                 birthdate=parse_date('1999-02-03'),
                 admission_date=parse_date('2020-01-04'),
                 job_role='Estagiário Teste',
+                created_by=cls.user
             ),
             naver_4=NaverFactory(
                 name='Priscila Marques',
                 birthdate=parse_date('1987-01-23'),
                 admission_date=parse_date('2014-02-02'),
                 job_role='Gerente de Projetos',
+                created_by=cls.user
             )
         )
 
@@ -69,7 +74,6 @@ class NaversIndexViewTestCase(TestCase):
         ]
 
     def setUp(self):
-        self.user = UserFactory()
         self.client = APIClient()
         self.client.force_authenticate(self.user)
         self.url = '/api/navers/'
