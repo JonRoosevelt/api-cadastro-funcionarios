@@ -41,6 +41,8 @@ pip install -r requirements.txt
     ```shell=
     python manage.py test
     ```
+* Link da documentação (Postman)
+[Documentação Api](https://documenter.getpostman.com/view/1528220/TVCY6CAB)
 
 * Link do Roadmap do processo
 [Roadmap](https://www.notion.so/5a4280f7dd854da39d65d5720734e48d?v=a84951d8db63471e936b0a81dcbe7f28)
