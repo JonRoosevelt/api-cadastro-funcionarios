@@ -155,3 +155,26 @@ class ProjetosView(viewsets.ReadOnlyModelViewSet):
                     instance).data
                 return Response(data=serialized_instance, status=201)
         return Response(serialized_data.errors)
+
+    def update(self, *args, **kwargs):
+        if self.request.method != 'PUT':
+            return
+        project = models.Projeto.objects.filter(id=self.kwargs['pk']).first()
+        if project:
+            if project.created_by.id == self.request.user.id:
+                serializer_data = self.get_serialized_data()
+                if serializer_data.is_valid():
+                    with transaction.atomic():
+                        user = self.request.user
+                        validated_data = serializer_data.data
+                        validated_data['created_by'] = user
+                        instance = models.Projeto.objects.update(
+                            **validated_data
+                        )
+                        if bool(instance):
+                            validated_data['id'] = int(self.kwargs['pk'])
+                            validated_data['created_by'] = self.request.user.id
+                            return Response(data=validated_data, status=201)
+                return Response(serializer_data.errors)
+            return Response(status=403)
+        return Response(status=404)
