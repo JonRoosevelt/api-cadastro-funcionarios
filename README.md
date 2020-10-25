@@ -11,7 +11,7 @@ Instalação 🚀️
 
 * Clone o repositório dentro do ambiente virtual
 ```shell=
-$ git clone git@github.com:JonRoosevelt/navedex-api.git
+$ git clone git@github.com:JonRoosevelt/api-cadastro-funcionarios.git
 ```
 * Entre na pasta e instale os requisitos
 ```shell=
